@@ -1,30 +1,39 @@
----
-id: environment-setup
-title: Get Started with React Native
-hide_table_of_contents: true
----
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
+from kivy.uix.textinput import TextInput
+from kivy.uix.button import Button
 
-import PlatformSupport from '@site/src/theme/PlatformSupport';
-import BoxLink from '@site/src/theme/BoxLink';
+class TopUpApp(App):
+    def build(self):
+        layout = BoxLayout(orientation='vertical', padding=20, spacing=10)
 
-**React Native allows developers who know React to create native apps.** At the same time, native developers can use React Native to gain parity between native platforms by writing common features once.
+        # অ্যাপের টাইটেল
+        layout.add_widget(Label(text="Sami's Diamond Store", font_size=30, color=(0, 1, 1, 1)))
 
-We believe that the best way to experience React Native is through a **Framework**, a toolbox with all the necessary APIs to let you build production ready apps.
+        # ইউজার আইডি ইনপুট
+        layout.add_widget(Label(text="আপনার গেম আইডি দিন:"))
+        self.user_id = TextInput(multiline=False, hint_text="Example: 12345678")
+        layout.add_widget(self.user_id)
 
-You can also use React Native without a Framework, however we’ve found that most developers benefit from using a React Native Framework like [Expo](https://expo.dev). Expo provides features like file-based routing, high-quality universal libraries, and the ability to write plugins that modify native code without having to manage native files.
+        # ডায়মন্ড প্যাকেজ বাটনসমূহ
+        layout.add_widget(Label(text="প্যাকেজ নির্বাচন করুন:"))
+        
+        btn1 = Button(text="১০০ ডায়মন্ড - ৯০ টাকা", background_color=(0.2, 0.7, 0.3, 1))
+        btn1.bind(on_press=self.order_confirm)
+        layout.add_widget(btn1)
 
-<details>
-<summary>Can I use React Native without a Framework?</summary>
+        btn2 = Button(text="৫০০ ডায়মন্ড - ৪৩০ টাকা", background_color=(0.2, 0.7, 0.3, 1))
+        btn2.bind(on_press=self.order_confirm)
+        layout.add_widget(btn2)
 
-Yes. You can use React Native without a Framework. **However, if you’re building a new app with React Native, we recommend using a Framework.**
+        return layout
 
-In short, you’ll be able to spend time writing your app instead of writing an entire Framework yourself in addition to your app.
+    def order_confirm(self, instance):
+        print(f"অর্ডার রিসিভ হয়েছে! আইডি: {self.user_id.text} প্যাকেজ: {instance.text}")
 
-The React Native community has spent years refining approaches to navigation, accessing native APIs, dealing with native dependencies, and more. Most apps need these core features. A React Native Framework provides them from the start of your app.
-
-Without a Framework, you’ll either have to write your own solutions to implement core features, or you’ll have to piece together a collection of pre-existing libraries to create a skeleton of a Framework. This takes real work, both when starting your app, then later when maintaining it.
-
-If your app has unusual constraints that are not served well by a Framework, or you prefer to solve these problems yourself, you can make a React Native app without a Framework using Android Studio, Xcode. If you’re interested in this path, learn how to [set up your environment](set-up-your-environment) and how to [get started without a framework](getting-started-without-a-framework).
+if __name__ == '__main__':
+    TopUpApp().run()
 
 </details>
 
